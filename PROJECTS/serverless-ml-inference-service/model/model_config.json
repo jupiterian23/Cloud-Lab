@@ -1,0 +1,5 @@
+{
+    "model_name": "simple-threshold-model",
+    "version": "1.0",
+    "threshold": 0.5
+}
