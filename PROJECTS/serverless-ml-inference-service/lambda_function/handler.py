@@ -1,5 +1,11 @@
 import json
+import logging
+
 from model.model import predict
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def lambda_handler(event, context):
@@ -12,6 +18,8 @@ def lambda_handler(event, context):
         features = body.get("features")
 
         if not features:
+            logger.warning("Prediction request missing features")
+
             return {
                 "statusCode": 400,
                 "body": json.dumps({
@@ -20,6 +28,12 @@ def lambda_handler(event, context):
             }
 
         result = predict(features)
+
+        logger.info(
+            "Prediction completed: prediction=%s score=%s",
+            result["prediction"],
+            result["score"]
+        )
 
         return {
             "statusCode": 200,
@@ -30,6 +44,8 @@ def lambda_handler(event, context):
         }
 
     except Exception as e:
+        logger.exception("Prediction request failed")
+
         return {
             "statusCode": 500,
             "body": json.dumps({

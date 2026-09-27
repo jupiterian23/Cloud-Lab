@@ -17,3 +17,10 @@ Thumbs.db
 
 # AWS
 .aws/
+
+# Deployment artifacts
+build/
+lambda-deployment.zip
+
+# Lambda invocation responses
+response*.json
